@@ -5,6 +5,7 @@ import eyeWhite from '../assets/svg/eye_white.js'
 import { formatDate } from '../app/format.js'
 
 export const modal = () => (`
+
   <div class="modal fade" id="modaleFileAdmin1" data-testid="modaleFileAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
@@ -23,6 +24,14 @@ export const modal = () => (`
 
 export default (bill) => {
 
+  //* change views when is null  fileName and comment
+
+console.log(bill)
+let commentary = bill.commentary || "test";
+  bill.fileName !== "null" ? bill.fileName : (bill.fileName = "indéfini");
+  bill.commentAdmin ? bill.commentAdmin : (bill.commentAdmin = "");
+  bill.name ? bill.name : (bill.name = "nom de facture non defini!");
+
   return (`
     <div class="container dashboard-form" data-testid="dashboard-form">
       <div class="row">
@@ -39,7 +48,7 @@ export default (bill) => {
         </div>
         <div class="col-sm" id="dashboard-form-col2">
           <label for="commentary" class="bold-label">Commentaire</label>
-          <div class='textarea-field' style="height: 300px;"> ${bill.commentary} </div>
+          <div class='textarea-field' style="height: 300px;"> ${commentary} </div>
         </div>
       </div>
       <div class="row">

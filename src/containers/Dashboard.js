@@ -145,13 +145,24 @@ export default class {
       this.counter ++
     }
 
-    bills.forEach(bill => {
+ /*    bills.forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
-
     return bills
-
   }
+ */
+
+//* Todo BUG  Hunt 4 
+//* Fermer eventListener avant d'ouvrir un second et reclick
+
+bills.forEach(bill => {
+  $(`#open-bill${bill.id}`).off("click")
+  .on("click", ((e) => this.handleEditTicket(e, bill, bills)))
+})
+
+return bills
+
+}
 
   getBillsAllUsers = () => {
     if (this.store) {

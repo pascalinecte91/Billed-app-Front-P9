@@ -6,27 +6,46 @@ export default class NewBill {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
-
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
-    formNewBill.addEventListener("submit", this.handleSubmit)
+    formNewBill.addEventListener('submit', this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
-    file.addEventListener("change", this.handleChangeFile)
+    file.addEventListener('change', this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
-  
 
   handleChangeFile = e => {
+    
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
+    let fileName = ''
+    if(file !== undefined){
+      fileName = file.name
+    }
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
+    
+  
+    const errorExt = this.document.querySelector('span.errorExt')
+    
+    if(fileName === '') {
+      errorExt.classList.add('hidden')
+      return
+    }
+    
+    try {
+      if (this.checkFileExtension(fileName)) {
+        errorExt.classList.add('hidden')
+      }
+    }
+    catch(error) {
+      errorExt.classList.remove('hidden')   
+      return
+    }    
 
     this.store
       .bills()
@@ -37,15 +56,27 @@ export default class NewBill {
         }
       })
       .then(({fileUrl, key}) => {
-        console.log(fileUrl)
+        // console.log(fileUrl)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
   }
+
+
+  //**  BUG 3 Controle  extension du fichier uploadé
+  //* return trus si l extension est ok
+ 
+  checkFileExtension = fileName => {
+    if (fileName.indexOf("jpg") != -1 || fileName.indexOf("jpeg") != -1 || fileName.indexOf("png") != -1 ) {
+      return true
+    }
+    throw "extension non autorisée"
+    return false
+  }
+
   handleSubmit = e => {
     e.preventDefault()
-    console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,
@@ -73,7 +104,7 @@ export default class NewBill {
       .then(() => {
         this.onNavigate(ROUTES_PATH['Bills'])
       })
-      .catch(error => console.error(error))
+      .catch((error) => console.error(error))
     }
   }
 }

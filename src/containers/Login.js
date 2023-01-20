@@ -40,6 +40,8 @@ export default class Login {
   handleSubmitAdmin = e => {
     e.preventDefault() 
   
+  //* todo 1 BUG REPORT
+
   //* const user = {
   //*    type: "Admin",
   //*    email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value,
@@ -66,7 +68,8 @@ export default class Login {
       })
   }
 
-  // not need to cover this function by tests
+// not need to cover this function by tests
+  /* istanbul ignore next */
   login = (user) => {
     if (this.store) {
       return this.store
@@ -80,8 +83,8 @@ export default class Login {
       return null
     }
   }
-
-  // not need to cover this function by tests
+// not need to cover this function by tests
+  /* istanbul ignore next */
   createUser = (user) => {
     if (this.store) {
       return this.store
