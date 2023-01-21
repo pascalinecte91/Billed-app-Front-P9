@@ -40,7 +40,7 @@ export default class Login {
   handleSubmitAdmin = e => {
     e.preventDefault() 
   
-  //* todo 1 BUG REPORT
+  //* todo Bug report 2
 
   //* const user = {
   //*    type: "Admin",
@@ -48,6 +48,8 @@ export default class Login {
   //*    password: e.target.querySelector(`input[data-testid="employee-password-input"]`).value,
   //*    status: "connected"
   //*  } 
+  
+  //* replace
     const user = {
       type: "Admin",
       email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,

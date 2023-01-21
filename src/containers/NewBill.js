@@ -17,62 +17,39 @@ export default class NewBill {
   }
 
   handleChangeFile = e => {
-    
     e.preventDefault()
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    let fileName = ''
-    if(file !== undefined){
-      fileName = file.name
-    }
+    const inputFile = this.document.querySelector(`input[data-testid="file"]`)
+    const file = inputFile.files[0]
+    const filePath = e.target.value.split(/\\/g)
+    const fileName = filePath[filePath.length-1] 
+    //Ajout pour la vérification de l'extension
+    const fileExtension = fileName.split(".").pop()
+    const formats = ["jpg", "jpeg", "png"]
+    //
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
-    formData.append('file', file)
-    formData.append('email', email)
     
-  
-    const errorExt = this.document.querySelector('span.errorExt')
-    
-    if(fileName === '') {
-      errorExt.classList.add('hidden')
-      return
-    }
-    
-    try {
-      if (this.checkFileExtension(fileName)) {
-        errorExt.classList.add('hidden')
+
+    if (formats.includes(fileExtension)) {
+      formData.append('file', file);
+      formData.append('email', email);
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: {
+            noContentType: true
+          }
+        })
+        .then(({fileUrl, key}) => {
+          this.billId = key
+          this.fileUrl = fileUrl
+          this.fileName = fileName
+        }).catch(error => console.error(error))
+      } else {
+        inputFile.value = "";
+        return alert("Ce type de fichier n'est pas supporté,merci de choisir un fichier extension .jpg, .jpeg ou .png");
       }
-    }
-    catch(error) {
-      errorExt.classList.remove('hidden')   
-      return
-    }    
-
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
-        }
-      })
-      .then(({fileUrl, key}) => {
-        // console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-      }).catch(error => console.error(error))
-  }
-
-
-  //**  BUG 3 Controle  extension du fichier uploadé
-  //* return trus si l extension est ok
- 
-  checkFileExtension = fileName => {
-    if (fileName.indexOf("jpg") != -1 || fileName.indexOf("jpeg") != -1 || fileName.indexOf("png") != -1 ) {
-      return true
-    }
-    throw "extension non autorisée"
-    return false
   }
 
   handleSubmit = e => {

@@ -117,6 +117,9 @@ describe("Given that I am a user on login page", () => {
   });
 });
 
+
+//** todo Bug report 2  */
+//**  edit employee for admin */
 describe("Given that I am a user on login page", () => {
   describe("When I do not fill fields and I click on admin button Login In", () => {
     test("Then It should renders Login page", () => {

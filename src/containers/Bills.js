@@ -14,7 +14,7 @@ export default class {
     if (buttonNewBill) buttonNewBill.addEventListener('click', this.handleClickNewBill)
     const iconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`)
 
-    // la liste des news bills n'est pas empty alors : 
+    //* la liste des news bills n'est pas empty alors : 
     if (iconEye.length !== 0)
     iconEye.forEach(icon => {
       icon.addEventListener('click', () => this.handleClickIconEye(icon))
@@ -38,7 +38,7 @@ export default class {
   }
 
   //** BUG REPORT 1 ordre décroissant DATE */
-  //* add fonction .sort L39
+  //* add fonction .sort L49
   getBills = () => {
     if (this.store) {
       return this.store

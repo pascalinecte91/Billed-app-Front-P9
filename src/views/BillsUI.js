@@ -19,7 +19,7 @@ const row = bill => {
     `;
 };
 
-//* Bug Report 2
+//** bug report 1 ordre décroissant DATE */
 const rows = data => {
   return data && data.length
     ? data
