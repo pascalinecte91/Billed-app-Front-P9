@@ -3,7 +3,9 @@
     "test": "jest --coverage --noStackTrace --silent --watchAll --verbose",
     "bills": "jest src/__tests__/Bills.js",
     "dashboard": "jest src/__tests__/Dashboard.js",
-    "login": "jest src/__tests__/Login.js"
+    "login": "jest src/__tests__/Login.js",
+    "newBill": "jest src/__tests__/NewBill.js"
+    
   },
   "jest": {
     "verbose": false,
@@ -32,6 +34,7 @@
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/user-event": "^12.0.11",
     "babel-jest": "^26.1.0",
+    "isparta": "^4.1.1",
     "jest": "^26.1.0",
     "jest-environment-jsdom": "^27.4.6",
     "jest-html-reporter": "^3.1.3"

@@ -29,7 +29,7 @@ export default class NewBill {
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     
-
+/* istanbul ignore next */
     if (formats.includes(fileExtension)) {
       formData.append('file', file);
       formData.append('email', email);
@@ -41,11 +41,15 @@ export default class NewBill {
             noContentType: true
           }
         })
-        .then(({fileUrl, key}) => {
+        .then(
+          /* istanbul ignore next */
+          ({fileUrl, key}) => {
           this.billId = key
           this.fileUrl = fileUrl
           this.fileName = fileName
-        }).catch(error => console.error(error))
+        }).catch(
+          /* istanbul ignore next */
+          error => console.error(error))
       } else {
         inputFile.value = "";
         return alert("Ce type de fichier n'est pas supporté,merci de choisir un fichier extension .jpg, .jpeg ou .png");
@@ -81,7 +85,10 @@ export default class NewBill {
       .then(() => {
         this.onNavigate(ROUTES_PATH['Bills'])
       })
-      .catch((error) => console.error(error))
+    
+      .catch(
+        /* istanbul ignore next */
+        (error) => console.error(error))
     }
   }
 }

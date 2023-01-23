@@ -16,8 +16,6 @@ import Bills from "../containers/Bills.js"
 
 
 //* unit test as an employee
-
-
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
 
@@ -77,7 +75,7 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  describe("When i click on the button 'Nouvelle note de frais'", () => {
+  describe("When I am on Bills page and i click on the button 'Nouvelle note de frais'", () => {
     test("then it should open the 'Envoyer une note de frais' page", () => {
 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
@@ -110,6 +108,13 @@ describe("When I went on Bills page and it is loading", () => {
   })
 })
 
+describe('When I am on Bills page and there is no bill', () => {
+  test('Then bills should render an empty table', () => {
+    document.body.innerHTML = BillsUI({ data: [] })
+    const eyeIcon = screen.queryByTestId('icon-eye')
+    expect(eyeIcon).toBeNull()
+  })
+})
 describe("When I am on Bills page but back-end send an error message", () => {
   test("Then, Error page should be rendered", () => {
     document.body.innerHTML = BillsUI({ error: "error message" });

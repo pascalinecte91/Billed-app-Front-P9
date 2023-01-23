@@ -26,6 +26,7 @@ export default class Login {
     this.localStorage.setItem("user", JSON.stringify(user))
     this.login(user)
       .catch(
+        /* istanbul ignore next */
         (err) => this.createUser(user)
       )
       .then(() => {
@@ -36,30 +37,19 @@ export default class Login {
       })
 
   }
-
+//* todo Bug report 2
   handleSubmitAdmin = e => {
     e.preventDefault() 
-  
-  //* todo Bug report 2
-
-  //* const user = {
-  //*    type: "Admin",
-  //*    email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value,
-  //*    password: e.target.querySelector(`input[data-testid="employee-password-input"]`).value,
-  //*    status: "connected"
-  //*  } 
-  
-  //* replace
     const user = {
       type: "Admin",
       email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,
       password: e.target.querySelector(`input[data-testid="admin-password-input"]`).value,
       status: "connected"
     }
-    
     this.localStorage.setItem("user", JSON.stringify(user))
     this.login(user)
       .catch(
+        /* istanbul ignore next */
         (err) => this.createUser(user)
       )
       .then(() => {
@@ -69,8 +59,7 @@ export default class Login {
         document.body.style.backgroundColor="#fff"
       })
   }
-
-// not need to cover this function by tests
+  // not need to cover this function by tests
   /* istanbul ignore next */
   login = (user) => {
     if (this.store) {

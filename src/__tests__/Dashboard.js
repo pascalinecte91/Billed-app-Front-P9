@@ -13,6 +13,15 @@ import mockStore from "../__mocks__/store"
 import { bills } from "../fixtures/bills"
 import router from "../app/Router"
 
+// test pour controler si jest est bien fonctionnel
+
+/* describe('ma 1ere suite de test', () => {
+  test ('mon 1er test', () => {
+    expect(false).toBe(true)
+  })
+}) */
+
+
 jest.mock("../app/store", () => mockStore)
 
 describe('Given I am connected as an Admin', () => {

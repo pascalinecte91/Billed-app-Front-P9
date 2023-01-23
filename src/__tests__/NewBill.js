@@ -46,9 +46,37 @@ describe("Given I am connected as an employee", () => {
       const mailIcon = screen.getByTestId("icon-mail");
       expect(mailIcon.className).toBe("active-icon");
     })
-    
   })
+  
+  describe("when I submit the form with empty fields", () => {
+    test("then I should stay on new 'Bill page'", () => {
+      // Navigate to the new page
+      window.onNavigate(ROUTES_PATH.NewBill);
+      // Create instant of newBill
+      const newBill = new NewBill({
+        document,
+        onNavigate,
+        mockStore,
+        localStorage: window.localStorage,
+      });
 
+      expect(screen.getByTestId("expense-name").value).toBe("");
+      expect(screen.getByTestId("datepicker").value).toBe("");
+      expect(screen.getByTestId("amount").value).toBe("");
+      expect(screen.getByTestId("vat").value).toBe("");
+      expect(screen.getByTestId("pct").value).toBe("");
+      expect(screen.getByTestId("file").value).toBe("");
+
+      const form = screen.getByTestId("form-new-bill");
+      // mock the function handleSubmit
+      const handleSubmit = jest.fn((e) => newBill.handleSubmit(e));
+
+      form.addEventListener("submit", handleSubmit);
+      fireEvent.submit(form);
+      expect(handleSubmit).toHaveBeenCalled();
+      expect(form).toBeTruthy();
+    });
+  });
   describe('When I am on NewBill page and I submit a wrong attached file format', () => {
     //** mauvais format de fichier
     test('Then the error message should be run', () => {});
@@ -56,23 +84,16 @@ describe("Given I am connected as an employee", () => {
     //* DOM 
     document.body.innerHTML = NewBillUI();
 
-    // get DOM element
     const newBillContent = new NewBill({
-      document,
-      onNavigate,
-      firestore: null,
-      localStorage: window.localStorage,
+      document,onNavigate, firestore: null, localStorage: window.localStorage,
     });
 
     const handleChangeFile = jest.fn(newBillContent.handleChangeFile);
 
     const attachedFile = screen.getByTestId('file');
     attachedFile.addEventListener('change', handleChangeFile);
-    fireEvent.change(attachedFile, {
-      target: {
-        files: [
-          new File(['file.pdf'], 'file.pdf', {
-            type: 'image/pdf',
+    fireEvent.change(attachedFile, {target: {files: [
+          new File(['file.pdf'], 'file.pdf', { type: 'image/pdf',
           }),
         ],
       },
@@ -86,9 +107,7 @@ describe("Given I am connected as an employee", () => {
     const errorMsg = screen.getByTestId('errorMsg');
 
     expect(errorMsg.textContent).toEqual(
-      expect.stringContaining(
-        'Votre justificatif doit être une image de format (.jpg) ou (.jpeg) ou (.png)'
-      )
+      expect.stringContaining('Votre justificatif doit être une image de format (.jpg) ou (.jpeg) ou (.png)')
     )
   })
 })
@@ -122,39 +141,26 @@ describe("Given I am a user connected as Employee", () => {
       const inputFile = screen.getByTestId("file")
 
       //On simule les valeurs
-      fireEvent.change(inputExpenseName, {
-        target: {value: inputData.name}
-      })
+      fireEvent.change(inputExpenseName, {target: {value: inputData.name}})
       expect(inputExpenseName.value).toBe(inputData.name);
 
-      fireEvent.change(inputExpenseType, {
-        target: {value: inputData.type}
-      })
+      fireEvent.change(inputExpenseType, {target: {value: inputData.type}})
       expect(inputExpenseType.value).toBe(inputData.type);
 
-      fireEvent.change(inputDatepicker, {
-        target: {value: inputData.datepicker}
-      })
+      fireEvent.change(inputDatepicker, {target: {value: inputData.datepicker}})
       expect(inputDatepicker.value).toBe(inputData.datepicker);
 
-      fireEvent.change(inputAmount, {
-        target: {value: inputData.amount}
-      })
+      fireEvent.change(inputAmount, {target: {value: inputData.amount}})
       expect(inputAmount.value).toBe(inputData.amount);
 
       fireEvent.change(inputVat, {
-        target: {value: inputData.vat}
-      })
+        target: {value: inputData.vat}})
       expect(inputVat.value).toBe(inputData.vat);
 
-      fireEvent.change(inputPct, {
-        target: {value: inputData.pct}
-      })
+      fireEvent.change(inputPct, {target: {value: inputData.pct}})
       expect(inputPct.value).toBe(inputData.pct);
 
-      fireEvent.change(inputCommentary, {
-        target: {value: inputData.commentary}
-      })
+      fireEvent.change(inputCommentary, {target: {value: inputData.commentary}})
       expect(inputCommentary.value).toBe(inputData.commentary);
 
       userEvent.upload(inputFile, inputData.file)
@@ -162,10 +168,7 @@ describe("Given I am a user connected as Employee", () => {
       expect(inputFile.files).toHaveLength(1)
 
       //On rempli localStorage avec les données de formulaire
-      Object.defineProperty(window, "localStorage", {
-        value : { getItem: jest.fn(() => JSON.stringify({email: "email@test.com",}))},
-        writable: true
-      })
+      Object.defineProperty(window, "localStorage", {value : { getItem: jest.fn(() => JSON.stringify({email: "email@test.com",}))},writable: true})
       //On simule la navigation
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({pathname})
