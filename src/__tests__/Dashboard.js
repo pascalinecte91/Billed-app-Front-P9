@@ -13,7 +13,7 @@ import mockStore from "../__mocks__/store"
 import { bills } from "../fixtures/bills"
 import router from "../app/Router"
 
-// test pour controler si jest est bien fonctionnel
+//**  test pour controler si jest est bien fonctionnel
 
 /* describe('ma 1ere suite de test', () => {
   test ('mon 1er test', () => {
@@ -249,7 +249,7 @@ describe('Given I am connected as Admin and I am on Dashboard page and I clicked
   })
 })
 
-// test d'intégration GET
+//**  test d'intégration GET
 describe("Given I am a user connected as Admin", () => {
   describe("When I navigate to Dashboard", () => {
     test("fetches bills from mock API GET", async () => {

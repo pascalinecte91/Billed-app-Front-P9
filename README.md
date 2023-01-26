@@ -1,4 +1,4 @@
-![Billed](Assets/Readme.jpg)
+![Billed](Documents/Readme.jpg)
 
 
 ## Contexte
@@ -7,12 +7,14 @@
 ## Objectifs
 Corriger les derniers bugs et mise en place de tests sur la fonctionnalité “note de frais” avant de lancer officiellement auprès de nos clients d’ici 2 semaines. 
 
-- cliquez pour voir le [Descriptif](Assets/Descriptif_fonctionnalites.pdf)
-- cliquez pour consulter le [Descriptif des besoins](Assets/Billed%2B-%2BDescription%2Bpratique%2Bdes%2Bbesoins%2B-.pdf)
+- cliquez pour voir le [Descriptif](Documents/Descriptif_fonctionnalites.pdf)
+- cliquez pour consulter le [Descriptif des besoins](Documents/Billed%2B-%2BDescription%2Bpratique%2Bdes%2Bbesoins%2B-.pdf)
 
 ---
 
 [Kanban](https://www.notion.so/a7a612fc166747e78d95aa38106a55ec?v=2a8d3553379c4366b6f66490ab8f0b90)
+
+[Kanban completed](https://www.notion.so/7cef30e837f94cb29fbff56fd60f40be?v=f810243229f54f77aa1e2dc85c9c2209)
 
 ## TO DO  
  
