@@ -19,7 +19,7 @@ const row = bill => {
     `;
 };
 
-//** bug report 1 ordre décroissant DATE */
+//! on stock tout dans la var rows et on tri
 const rows = data => {
   return data && data.length
     ? data
@@ -29,7 +29,7 @@ const rows = data => {
     };
 
 export default ({ data: bills, loading, error }) => {
-  const modal = () => `
+	const modal = () => `
     <div class="modal fade" id="modaleFile" tabindex="-1" role="dialog" name="modal" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -45,14 +45,14 @@ export default ({ data: bills, loading, error }) => {
       </div>
     </div>
   `;
+	//! si rien ne se charge  =  message d'erreur
+	if (loading) {
+		return LoadingPage();
+	} else if (error) {
+		return ErrorPage(error);
+	}
 
-  if (loading) {
-    return LoadingPage();
-  } else if (error) {
-    return ErrorPage(error);
-  }
-
-  return `
+	return `
     <div class='layout'>
       ${VerticalLayout(120)}
       <div class='content'>

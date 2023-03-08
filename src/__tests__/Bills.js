@@ -13,6 +13,11 @@ import mockStore from "../__mocks__/store";
 import router from "../app/Router.js";
 import Bills from "../containers/Bills.js";
 
+jest.mock("../app/store", () => mockStore);
+
+
+
+
 //* unit test as an employee
 describe("Given I am connected as an employee", () => {
 	describe("When I am on Bills Page", () => {
@@ -32,19 +37,22 @@ describe("Given I am connected as an employee", () => {
 
 			await waitFor(() => screen.getByTestId("icon-window"));
 			const windowIcon = screen.getByTestId("icon-window");
-			
-			//* add  expect   expression TODO  
+
+			//! add  expect  manquant  TODO 5
 			expect(windowIcon).toBeTruthy();
 		});
-		
+
 		//** bug report 1 ordre décroissant DATE */
+
 		test("Then bills should be ordered from earliest to latest", () => {
 			document.body.innerHTML = BillsUI({ data: bills });
 			const dates = screen
 				.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i)
 				.map((a) => a.innerHTML);
 			const antiChrono = (a, b) => (a < b ? 1 : -1);
+			//* je stock dans la var toutes les dates dans un array 
 			const datesSorted = [...dates].sort(antiChrono);
+			//* les dates sont triees, et je m'attends à avoir
 			expect(dates).toEqual(datesSorted);
 		});
 

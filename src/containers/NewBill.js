@@ -16,44 +16,46 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
 
+  //* gerer le fichier de modif
   handleChangeFile = e => {
-    e.preventDefault()
-    const inputFile = this.document.querySelector(`input[data-testid="file"]`)
-    const file = inputFile.files[0]
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1] 
-    //Ajout pour la vérification de l'extension
-    const fileExtension = fileName.split(".").pop()
-    const formats = ["jpg", "jpeg", "png"]
-    //
-    const formData = new FormData()
-    const email = JSON.parse(localStorage.getItem("user")).email
-    
-/* istanbul ignore next */
-    if (formats.includes(fileExtension)) {
-      formData.append('file', file);
-      formData.append('email', email);
-      this.store
-        .bills()
-        .create({
-          data: formData,
-          headers: {
-            noContentType: true
-          }
-        })
-        .then(
-          /* istanbul ignore next */
-          ({fileUrl, key}) => {
-          this.billId = key
-          this.fileUrl = fileUrl
-          this.fileName = fileName
-        }).catch(
-          /* istanbul ignore next */
-          error => console.error(error))
-      } else {
-        inputFile.value = "";
-        return alert("Ce type de fichier n'est pas supporté,merci de choisir un fichier extension .jpg, .jpeg ou .png");
-      }
+		e.preventDefault();
+		const inputFile = this.document.querySelector(`input[data-testid="file"]`);
+		const file = inputFile.files[0];
+		const filePath = e.target.value.split(/\\/g);
+		const fileName = filePath[filePath.length - 1];
+		//! si la chaine est vide alors elle est utilisés comme separation entre chaque caractere, là .
+		//! sans modifier le string d'origine
+		// pop supprime le dernier element
+		const fileExtension = fileName.split(".").pop();
+		const formats = ["jpg", "jpeg", "png"];
+		const formData = new FormData();
+		const email = JSON.parse(localStorage.getItem("user")).email;
+
+		/* istanbul ignore next */
+		if (!formats.includes(fileExtension)) {
+			//* Si la valeur est vide : le formulaire ne peut pas etre envoyé,  : alerte
+			inputFile.value = "";
+			return alert(
+				"Ce type de fichier n'est pas supporté,merci de choisir un fichier extension .jpg, .jpeg ou .png"
+			);
+		}
+		formData.append("file", file);
+		formData.append("email", email);
+		this.store
+			.bills()
+			.create({ data: formData, headers: { noContentType: true } })
+			.then(
+				/* istanbul ignore next */
+				({ fileUrl, key }) => {
+					this.billId = key;
+					this.fileUrl = fileUrl;
+					this.fileName = fileName;
+				}
+			)
+			.catch(
+				/* istanbul ignore next */
+				(error) => console.error(error)
+			);
   }
 
   handleSubmit = e => {

@@ -7,6 +7,8 @@ import Actions from "../views/Actions.js"
 import '@testing-library/jest-dom/extend-expect'
 
 
+//! 1/ j'importe ce dont j'ai besoin
+
 describe('Given I am connected as an Employee', () => {
   describe('When I am on Bills page and there are bills', () => {
     test(('Then, it should render icon eye'), () => {

@@ -76,9 +76,6 @@ describe("Given I am connected as an employee", () => {
 		});
 	});
 	describe("When I am on NewBill page and I submit a wrong attached file format", () => {
-		//** mauvais format de fichier
-		test("Then the error message should be run", () => {});
-
 		//* DOM
 		document.body.innerHTML = NewBillUI();
 
@@ -110,42 +107,43 @@ describe("Given I am connected as an employee", () => {
 
 		//* format valid
 		test("Then it should accept the file when it as the right format", () => {
-      
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      window.localStorage.setItem('user', JSON.stringify({
-        type: 'Employee'
-      }))
+			Object.defineProperty(window, "localStorage", { value: localStorageMock });
+			window.localStorage.setItem(
+				"user",
+				JSON.stringify({
+					type: "Employee",
+				})
+			);
 
-      const root = document.createElement("div");
-      root.setAttribute("id", "root");
+			const root = document.createElement("div");
+			root.setAttribute("id", "root");
 
-      document.body.append(root);
+			document.body.append(root);
 
-      router();
-      window.onNavigate(ROUTES_PATH.NewBill);
+			router();
+			window.onNavigate(ROUTES_PATH.NewBill);
 
-      const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage: window.localStorage
-      })
+			const newBill = new NewBill({ document, onNavigate, store: mockStore, localStorage: window.localStorage });
 
-      const handleChangeFile = jest.fn((e) => newBill.handleChangeFile(e))
+			const handleChangeFile = jest.fn((e) => newBill.handleChangeFile(e));
 
-      const file = screen.getAllByTestId('file')[1]
-      file.addEventListener("change", handleChangeFile)
-      fireEvent.change(file, {
-        target: {
-          files: [new File(['anything'], 'text.png', {
-            type: 'image/png'
-          })]
-        }
-      });
+			const file = screen.getAllByTestId("file")[1];
+			file.addEventListener("change", handleChangeFile);
+			fireEvent.change(file, {
+				target: {
+					files: [
+						new File(["anything"], "text.png", {
+							type: "image/png",
+						}),
+					],
+				},
+			});
 
-      expect(handleChangeFile).toHaveBeenCalled();
-      expect(handleChangeFile).toBeTruthy();
-    })
-  })
-})
-
-
+			expect(handleChangeFile).toHaveBeenCalled();
+			expect(handleChangeFile).toBeTruthy();
+		});
+	});
+});
 
 //** Test d'intégration (POST)
 
@@ -229,7 +227,7 @@ describe("Given I am a user connected as Employee", () => {
 			const message = await screen.getByText(/Erreur 404/);
 			expect(message).toBeTruthy();
 		});
-		
+
 		test("Then it fails with a 500 error", async () => {
 			const html = BillsUI({ error: "Erreur 500" });
 			document.body.innerHTML = html;

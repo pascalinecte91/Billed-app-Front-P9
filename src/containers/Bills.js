@@ -30,7 +30,7 @@ export default class {
   handleClickIconEye = (icon) => {
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
-    $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
+    $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' width: 100%'; class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
 
        // no need to cover this function by tests
     // /* istanbul ignore next*/
@@ -39,22 +39,19 @@ export default class {
   }
 
   
-  //** BUG REPORT 1 ordre décroissant DATE */
-  //* add fonction .sort L49
+  //! BUG REPORT 1 ordre décroissant DATE */
+  //* add fonction .sort L50
   getBills = () => {
     if (this.store) {
       return this.store
         .bills()
         .list()
         .then(snapshot => {
-          const bills = snapshot
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
+          const bills = snapshot.sort((a, b) => new Date(b.date) - new Date(a.date))
             .map(doc => {
               try {
                 return {
-                  ...doc,
-                  date: formatDate(doc.date),
-                  status: formatStatus(doc.status),
+                  ...doc, date: formatDate(doc.date),status: formatStatus(doc.status),
                 };
               } catch (e) {
                 // if for some reason, corrupted data was introduced, we manage here failing formatDate function

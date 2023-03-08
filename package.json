@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "jest --coverage --noStackTrace --silent --watchAll --verbose",
+    "test": "jest --coverage --noStackTrace --silent --watchAll --verbose true",
     "bills": "jest src/__tests__/Bills.js",
     "dashboard": "jest src/__tests__/Dashboard.js",
     "login": "jest src/__tests__/Login.js",
@@ -8,7 +8,7 @@
     
   },
   "jest": {
-    "verbose": false,
+    "verbose": true,
     "setupFiles": [
       "./setup-jest.js"
     ],

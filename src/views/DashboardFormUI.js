@@ -24,7 +24,6 @@ export const modal = () => (`
 
 export default (bill) => {
 
-  //* change views when is null  fileName and comment
 
 console.log(bill)
 let commentary = bill.commentary || "test";

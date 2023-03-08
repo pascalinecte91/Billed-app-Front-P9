@@ -156,9 +156,10 @@ export default class {
 
 //* Todo BUG  Hunt 4 
 //* Fermer eventListener avant d'ouvrir un second et reclick
+//! ajouter la fn .off('click),  qui va supprimer l'évenement attaché à la fn .on('click')
 
 bills.forEach(bill => {
-   //* off : elle supprime  l evenement
+//! off : elle supprime  l evenement
   $(`#open-bill${bill.id}`).off("click") 
   .on("click", ((e) => this.handleEditTicket(e, bill, bills)))
 })
